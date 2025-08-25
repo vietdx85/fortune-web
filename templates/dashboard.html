@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="{{ url_for('index') }}">Web Xem Bói</a>
+        <div>
+            <a class="btn btn-light me-2" href="{{ url_for('history') }}">Lịch sử</a>
+            <a class="btn btn-light me-2" href="{{ url_for('chat') }}">Chat</a>
+            <a class="btn btn-danger" href="{{ url_for('logout') }}">Đăng xuất</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Dashboard của {{ session['username'] }}</h2>
+
+    <div class="row text-center">
+        <div class="col-md-4 mb-3">
+            <div class="card p-4 shadow-sm">
+                <h5>Lượt xem bói</h5>
+                <p class="display-6">{{ history_count }}</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card p-4 shadow-sm">
+                <h5>Lượt chat hôm nay</h5>
+                <p class="display-6">{{ chat_count }}</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card p-4 shadow-sm">
+                <h5>Số may mắn hôm nay</h5>
+                <p class="display-6">{{ lucky_today }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-5">
+        <h4>Lịch sử xem bói gần đây</h4>
+        {% if records %}
+        <table class="table table-striped mt-3">
+            <thead>
+                <tr>
+                    <th>Ngày</th>
+                    <th>Tên</th>
+                    <th>Cung Hoàng Đạo</th>
+                    <th>Loại bói</th>
+                    <th>Số may mắn</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in records[:5] %}
+                <tr>
+                    <td>{{ r[8] }}</td>
+                    <td>{{ r[2] }}</td>
+                    <td>{{ r[4] }}</td>
+                    <td>{{ r[7] }}</td>
+                    <td>{{ r[6] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>Chưa có kết quả nào.</p>
+        {% endif %}
+    </div>
+</div>
+
+</body>
+</html>

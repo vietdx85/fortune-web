@@ -1,15 +1,24 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .card {
     border-radius: 15px;
 }
 
-h1 {
-    color: #2c3e50;
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
 }
 
-h4 {
-    color: #16a085;
+.btn-light {
+    font-weight: 500;
+}
+
+h2, h3, h4 {
+    color: #333;
+}
+
+table th, table td {
+    vertical-align: middle !important;
 }
