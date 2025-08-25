@@ -1,24 +1,146 @@
+/* === Font & Body === */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa; /* màu nền nhẹ */
+    margin: 0;
+    padding: 0;
 }
 
-.card {
-    border-radius: 15px;
-}
-
+/* === Navbar === */
 .navbar-brand {
-    font-weight: bold;
+    font-weight: 600;
     font-size: 1.5rem;
 }
-
-.btn-light {
+.navbar .nav-link {
     font-weight: 500;
+    margin-right: 10px;
+}
+.navbar .btn-danger {
+    margin-left: 10px;
 }
 
-h2, h3, h4 {
-    color: #333;
+/* === Buttons === */
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+.btn-primary:hover {
+    background-color: #0069d9;
+    border-color: #0062cc;
+}
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
 }
 
+/* === Card === */
+.card {
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+    background-color: #fff;
+}
+
+/* === Tables === */
+table {
+    background-color: #fff;
+    border-radius: 10px;
+}
 table th, table td {
     vertical-align: middle !important;
+}
+
+/* === Forms === */
+input.form-control, select.form-select {
+    border-radius: 8px;
+}
+
+/* === Chat === */
+.chat-container { 
+    max-width: 600px; 
+    margin: 20px auto; 
+    border:1px solid #ccc; 
+    border-radius:10px; 
+    background:#fff; 
+    display:flex; 
+    flex-direction:column; 
+    height:500px;
+}
+.chat-history { 
+    flex:1; 
+    overflow-y:auto; 
+    padding:20px; 
+}
+.message { 
+    margin-bottom:10px; 
+    padding:8px 12px; 
+    border-radius:12px; 
+    display:inline-block; 
+    max-width:80%; 
+}
+.user { 
+    text-align:right; 
+    background:#d4edda; 
+    color:#155724; 
+    align-self:flex-end; 
+}
+.bot { 
+    text-align:left; 
+    background:#cce5ff; 
+    color:#004085; 
+    align-self:flex-start; 
+}
+.message.new { 
+    animation: highlight 1s ease; 
+}
+@keyframes highlight {
+    from { background-color: yellow; }
+    to { background-color: inherit; }
+}
+.chat-input { 
+    display:flex; 
+    border-top:1px solid #ccc; 
+}
+.chat-input input { 
+    flex:1; 
+    padding:10px; 
+    border:none; 
+    border-radius:0 0 0 10px; 
+}
+.chat-input button { 
+    padding:10px 20px; 
+    border:none; 
+    background:#007bff; 
+    color:#fff; 
+    border-radius:0 0 10px 0; 
+}
+
+/* === Utility === */
+.text-center { text-align:center; }
+.mt-3 { margin-top:1rem !important; }
+.mt-5 { margin-top:3rem !important; }
+.mb-2 { margin-bottom:0.5rem !important; }
+.mb-3 { margin-bottom:1rem !important; }
+.mb-4 { margin-bottom:1.5rem !important; }
+.mb-5 { margin-bottom:3rem !important; }
+
+/* === Responsive adjustments === */
+@media (max-width: 768px) {
+    .chat-container {
+        height: 400px;
+        margin: 10px;
+    }
+    .card {
+        padding: 15px;
+    }
+    .chat-input input {
+        padding: 8px;
+    }
+    .chat-input button {
+        padding: 8px 12px;
+    }
 }

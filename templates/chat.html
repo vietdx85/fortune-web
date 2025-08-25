@@ -4,29 +4,22 @@
 <meta charset="UTF-8">
 <title>Chat hỏi bói</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<style>
-.chat-container { max-width: 600px; margin: 50px auto; border:1px solid #ccc; border-radius:10px; background:#fff; display:flex; flex-direction:column; height:500px;}
-.chat-history { flex:1; overflow-y:auto; padding:20px; }
-.message { margin-bottom:10px; }
-.user { text-align:right; color:green; }
-.bot { text-align:left; color:blue; }
-.chat-input { display:flex; border-top:1px solid #ccc; }
-.chat-input input { flex:1; padding:10px; border:none; border-radius:0 0 0 10px; }
-.chat-input button { padding:10px 20px; border:none; background:#007bff; color:#fff; border-radius:0 0 10px 0; }
-</style>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body class="bg-light">
-<div class="chat-container">
-    <div class="chat-history" id="chat-history">
-        {% for msg in chat_history %}
-            <div class="message {{ msg.role }}">{{ msg.message }}</div>
-        {% endfor %}
+<body>
+    {% include 'navbar.html' %}
+
+    <div class="chat-container">
+        <div class="chat-history" id="chat-history">
+            {% for msg in chat_history %}
+                <div class="message {{ msg.role }}">{{ msg.message }}</div>
+            {% endfor %}
+        </div>
+        <div class="chat-input">
+            <input type="text" id="message-input" placeholder="Nhập câu hỏi...">
+            <button onclick="sendMessage()">Gửi</button>
+        </div>
     </div>
-    <div class="chat-input">
-        <input type="text" id="message-input" placeholder="Nhập câu hỏi...">
-        <button onclick="sendMessage()">Gửi</button>
-    </div>
-</div>
 
 <script>
 function scrollBottom() {
@@ -34,11 +27,22 @@ function scrollBottom() {
     container.scrollTop = container.scrollHeight;
 }
 
+function addMessage(text, role) {
+    const history = document.getElementById("chat-history");
+    const div = document.createElement("div");
+    div.className = "message " + role + " new";
+    div.textContent = text;
+    history.appendChild(div);
+    scrollBottom();
+}
+
 function sendMessage() {
     const input = document.getElementById("message-input");
     const message = input.value.trim();
     if(!message) return;
     input.value = "";
+    input.focus();
+    addMessage(message, "user");
 
     fetch("/chat/send", {
         method:"POST",
@@ -47,22 +51,20 @@ function sendMessage() {
     })
     .then(res=>res.json())
     .then(data=>{
-        const history = document.getElementById("chat-history");
-        const userDiv=document.createElement("div");
-        userDiv.className="message user";
-        userDiv.textContent=message;
-        history.appendChild(userDiv);
-
-        const botDiv=document.createElement("div");
-        botDiv.className="message bot";
-        botDiv.textContent=data.reply;
-        history.appendChild(botDiv);
-
-        scrollBottom();
+        addMessage(data.reply, "bot");
     });
 }
 
+const inputField = document.getElementById("message-input");
+inputField.addEventListener("keydown", function(event) {
+    if(event.key === "Enter") {
+        event.preventDefault();
+        sendMessage();
+    }
+});
+
 scrollBottom();
+inputField.focus();
 </script>
 </body>
 </html>
